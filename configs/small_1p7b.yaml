@@ -1,0 +1,45 @@
+# 快速迭代。放置按 2×L20 48GB、无 NVLink。这套也能单卡跑，默认仍拆到两张卡。
+# 隐层和词表来自 docs/compute.md 的核对，不是训练结果。LoRA 秩是起点，没调过。
+
+student:
+  name: Qwen/Qwen3-1.7B
+  hidden_size: 2048
+  device: cuda:0
+  dtype: bfloat16
+  lora:
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: [q_proj, k_proj, v_proj, o_proj]
+
+teacher:
+  name: Qwen/Qwen3-VL-4B-Instruct
+  device: cuda:1
+  dtype: bfloat16
+  frozen: true
+
+projector:
+  kind: linear
+  patch_size: 14
+
+hardware:
+  count: 2
+  name: L20
+  memory_gb: 48
+  nvlink: false
+
+vocab_size: 151936
+
+data:
+  warmup:
+    source: llava-pretrain-558k
+    subset_pairs: 50000
+    trainable: projector
+  opd:
+    sources: [llava-instruct-665k, sharegpt4v]
+    fields: [image, question]
+    student_generates_answers: true
+    fractions: [0.01, 0.05, 0.1, 1.0]
+  ocr_optional: [textvqa-train, docvqa-train]
+
+seed: 0

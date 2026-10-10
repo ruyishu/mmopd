@@ -1,0 +1,31 @@
+[project]
+name = "mm-opd"
+version = "0.1.0"
+description = "Encoder-free text LLM trained with on-policy distillation from a same-family VLM."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "torch",
+    "transformers",
+    "peft",
+    "accelerate",
+    "datasets",
+    "pillow",
+]
+
+[project.optional-dependencies]
+deepspeed = ["deepspeed"]
+eval = ["lm-eval"]
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14.0"]
+build-backend = "uv_build"
+
+# CUDA 12.8 wheels. This is the cu12 index PyTorch still publishes current releases on.
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }

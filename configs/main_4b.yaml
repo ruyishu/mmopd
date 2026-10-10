@@ -1,0 +1,46 @@
+# 主配置。2×L20 48GB，无 NVLink。学生在 GPU0，教师在 GPU1。
+# 学生隐层 2560。教师 VL-8B 隐层是 4096，两边不对齐，不蒸馏隐表示。
+# LoRA 秩是起点，没调过。subset 与显存假设都不是已完成的实验。
+
+student:
+  name: Qwen/Qwen3-4B
+  hidden_size: 2560
+  device: cuda:0
+  dtype: bfloat16
+  lora:
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: [q_proj, k_proj, v_proj, o_proj]
+
+teacher:
+  name: Qwen/Qwen3-VL-8B-Instruct
+  device: cuda:1
+  dtype: bfloat16
+  frozen: true
+
+projector:
+  kind: linear
+  patch_size: 14
+
+hardware:
+  count: 2
+  name: L20
+  memory_gb: 48
+  nvlink: false
+
+vocab_size: 151936
+
+data:
+  warmup:
+    source: llava-pretrain-558k
+    subset_pairs: 100000
+    trainable: projector
+  opd:
+    sources: [llava-instruct-665k, sharegpt4v]
+    fields: [image, question]
+    student_generates_answers: true
+    fractions: [0.01, 0.05, 0.1, 1.0]
+  ocr_optional: [textvqa-train, docvqa-train]
+
+seed: 0
