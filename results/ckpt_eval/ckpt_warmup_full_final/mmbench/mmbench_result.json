@@ -1,0 +1,7 @@
+{
+  "ckpt": "ckpt/warmup_full/final",
+  "bench": "mmbench_en_dev_single_pass_orig_rows",
+  "n": 200,
+  "acc": 51.0,
+  "seconds": 56.4
+}

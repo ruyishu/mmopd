@@ -1,0 +1,19 @@
+{
+  "model": "models/Qwen3-VL-4B-Instruct",
+  "bench": "mmbench_en_dev_single_pass",
+  "n": 50,
+  "acc": 92.0,
+  "extract_methods": {
+    "letter_start": 50
+  },
+  "seconds": 1.0,
+  "config": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "presence_penalty": 1.5,
+    "max_tokens": 64,
+    "seed": 0,
+    "circular": false
+  }
+}

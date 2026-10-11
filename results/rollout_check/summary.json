@@ -1,0 +1,9 @@
+{
+  "n": 64,
+  "hit_max_frac": 0.125,
+  "mean_tokens": 176.3,
+  "mean_rep4_all": 0.034,
+  "mean_rep4_capped": 0.148,
+  "capped_rep4_gt_0.5": 1,
+  "noncapped_rep4_gt_0.5": 0
+}

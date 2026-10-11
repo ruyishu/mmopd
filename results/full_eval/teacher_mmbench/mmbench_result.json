@@ -1,0 +1,24 @@
+{
+  "bench": "mmbench_en_dev",
+  "n_rows": 4329,
+  "n_questions": 1164,
+  "single_pass_acc": 89.18,
+  "circular_acc": 84.62,
+  "row_acc": 88.89,
+  "unparseable_rows": 0,
+  "extract_methods": {
+    "letter_start": 4329
+  },
+  "model": "models/Qwen3-VL-4B-Instruct",
+  "seconds": 109.0,
+  "config": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "presence_penalty": 1.5,
+    "max_tokens": 64,
+    "seed": 0,
+    "circular": true,
+    "circular_source": "dataset rotations grouped by index % 1e6"
+  }
+}

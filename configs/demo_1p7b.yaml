@@ -1,0 +1,65 @@
+# Demo config: Qwen3-1.7B student, Qwen3-VL-4B-Instruct teacher (frozen).
+# Devices are logical; scripts/train/*.sh set CUDA_VISIBLE_DEVICES from STU_GPU/TEA_GPU.
+seed: 0
+student:
+  path: models/Qwen3-1.7B
+  hidden_size: 2048
+  device: cuda:0
+  lora: {r: 16, alpha: 32, dropout: 0.05, target_modules: [q_proj, k_proj, v_proj, o_proj]}
+vision:
+  kind: qwen3vl_vit          # qwen3vl_vit | patch
+  vit_from: models/Qwen3-VL-4B-Instruct   # frozen model.visual incl. merger, no deepstack
+  vit_out_dim: 2560
+  image_size: 448            # 448/16=28 patches, merge 2 -> 14x14 = 196 tokens
+  num_image_tokens: 196
+  projector: mlp             # mlp (2-layer GELU) | linear
+  patch:                     # used only when kind == patch
+    image_size: 336
+    patch_size: 14
+    num_image_tokens: 576
+    projector: linear
+teacher:
+  path: models/Qwen3-VL-4B-Instruct
+  device: cuda:1
+data:
+  coco_root: data/coco/train2017
+  warmup_jsonl: data/demo/warmup_coco50k.jsonl
+  opd_jsonl: data/demo/opd_llava_coco10k.jsonl
+  teacher_resp_jsonl: data/demo/teacher_resp_10k.jsonl
+warmup:
+  instruction: "Describe this image briefly."
+  max_len: 512
+  lr: 1.0e-3
+  weight_decay: 0.0
+  warmup_ratio: 0.03
+  micro_batch: 16
+  grad_accum: 4              # global 64
+  epochs: 1
+  grad_clip: 1.0
+  grad_ckpt: true
+  out: ckpt/demo_warmup
+  save_every: 200
+opd:
+  init_projector: ckpt/warmup_full/final/projector.pt
+  lr_lora: 1.0e-4
+  lr_projector: 5.0e-5
+  warmup_steps: 20
+  steps: 300
+  micro_batch: 4
+  grad_accum: 8              # global 32 prompts
+  prompt_max_len: 1024
+  total_max_len: 1536        # also vLLM max_model_len
+  max_new_tokens: 512
+  rollout_backend: vllm      # vllm | hf
+  vllm_gpu_util: 0.12        # fraction of TOTAL GPU memory for colocated vLLM
+  vllm_enforce_eager: false  # false = allow CUDA graphs
+  rollout_temperature: 1.0
+  rollout_top_p: 1.0
+  kl_temperature: 1.0
+  kl_chunk: 256
+  grad_clip: 1.0
+  grad_ckpt: true
+  out: ckpt/demo_opd
+  save_every: 100
+  log_rollouts_every: 20     # 0 = off; writes a few rollout texts to OUT/rollouts.jsonl
+  log_rollouts_n: 4

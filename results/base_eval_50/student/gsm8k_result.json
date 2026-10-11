@@ -1,0 +1,21 @@
+{
+  "model": "models/Qwen3-1.7B",
+  "bench": "gsm8k_test",
+  "n": 50,
+  "acc": 70.0,
+  "extract_methods": {
+    "boxed": 46,
+    "last_number": 4
+  },
+  "seconds": 23.6,
+  "config": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "presence_penalty": 1.5,
+    "max_tokens": 1024,
+    "seed": 0,
+    "enable_thinking": false,
+    "prompt_suffix": "\nPlease reason step by step, and put your final answer after \"####\"."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "model": "ckpt/demo_kd/final/merged",
+  "bench": "gsm8k_test",
+  "n": 1319,
+  "acc": 81.5,
+  "extract_methods": {
+    "boxed": 1304,
+    "last_number": 15
+  },
+  "seconds": 65.5,
+  "config": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "presence_penalty": 1.5,
+    "max_tokens": 1024,
+    "seed": 0,
+    "enable_thinking": false,
+    "prompt_suffix": "\nPlease reason step by step, and put your final answer within \\boxed{}."
+  }
+}

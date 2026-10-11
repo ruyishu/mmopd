@@ -1,25 +1,19 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
-
-# Training outputs and local caches. No results are checked in.
-outputs/
-wandb/
+# large / regenerable artifacts (root-anchored so src/mm_opd/data stays tracked)
+/models/
+/data/
+/ckpt/
+/outputs/
+/logs/
+/tmp/
 .cache/
+.venv*/
+__pycache__/
+*.pyc
 *.pt
-*.bin
 *.safetensors
-
-# Downloaded datasets. Instructions live in data/README.md.
-data/llava-pretrain/
-data/llava-instruct/
-data/sharegpt4v/
-data/textvqa/
-data/docvqa/
+*.bin
+*.parquet
+*.jpg
+*.jpeg
+*.tgz
+*.bak*

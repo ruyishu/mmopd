@@ -1,0 +1,7 @@
+{
+  "ckpt": "ckpt/demo_opd/final",
+  "bench": "mmbench_en_dev_single_pass_orig_rows",
+  "n": 200,
+  "acc": 64.0,
+  "seconds": 51.1
+}

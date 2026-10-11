@@ -1,0 +1,18 @@
+{
+  "bench": "mmbench_en_dev",
+  "n_rows": 4329,
+  "n_questions": 1164,
+  "single_pass_acc": 56.27,
+  "circular_acc": 34.71,
+  "row_acc": 55.74,
+  "unparseable_rows": 405,
+  "extract_methods": {
+    "letter_start": 3167,
+    "fail": 405,
+    "letter_phrase": 267,
+    "option_text": 490
+  },
+  "ckpt": "ckpt/warmup_full/final",
+  "seconds": 818.9,
+  "student_extractor": "letter_start/letter_phrase/option_text; unparseable=wrong"
+}

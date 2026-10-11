@@ -1,0 +1,15 @@
+{
+  "bench": "mmbench_en_dev",
+  "n_rows": 4329,
+  "n_questions": 1164,
+  "single_pass_acc": 64.18,
+  "circular_acc": 51.55,
+  "row_acc": 64.98,
+  "unparseable_rows": 0,
+  "extract_methods": {
+    "letter_start": 4329
+  },
+  "ckpt": "ckpt/demo_kd/final",
+  "seconds": 784.3,
+  "student_extractor": "letter_start/letter_phrase/option_text; unparseable=wrong"
+}
